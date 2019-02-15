@@ -45,7 +45,7 @@ schema.static('findByCredentials', async function (credentials) {
   return await this.findOne({email: credentials.email.trim().toLowerCase()})
 })
 
-schema.method('generateToken', async function (data) {
+schema.method('generateToken', async function () {
   let cookieData = {
     token: uuid.v4()
   }
