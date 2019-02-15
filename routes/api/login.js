@@ -16,10 +16,7 @@ module.exports = function ({models, apiHelpers}) {
         let error = apiHelpers.createFieldError('base', 'email and password combination is not valid')
         throw error
       }
-      let token = await user.generateToken({
-        ip: req.ip,
-        user_agent: req.headers['user-agent'],
-      })
+      let token = await user.generateToken()
       res.body = {
         user: user.toJSON(),
         token: token

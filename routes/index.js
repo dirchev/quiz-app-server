@@ -16,16 +16,16 @@ let routes = async function ({app, models = {}}) {
   loadRoute('put', '/api/quiz-app/:quizAppId', require('./api/quiz-app/update'))
   loadRoute('delete', '/api/quiz-app/:quizAppId', require('./api/quiz-app/delete'))
 
-  loadRoute('get', '/api/quiz-app/:quizAppId/teachers', require('./api/quiz-app/teachers/list'))
-  loadRoute('post', '/api/quiz-app/:quizAppId/teachers', require('./api/quiz-app/teachers/add-teacher'))
-  loadRoute('delete', '/api/quiz-app/:quizAppId/teachers/:teacherId', require('./api/quiz-app/teachers/remove-teacher'))
+  loadRoute('get', '/api/quiz-app/:quizAppId/teachers', require('./api/teachers/list'))
+  loadRoute('post', '/api/quiz-app/:quizAppId/teachers', require('./api/teachers/add-teacher'))
+  loadRoute('delete', '/api/quiz-app/:quizAppId/teachers/:teacherId', require('./api/teachers/remove-teacher'))
 
-  loadRoute('get', '/api/quiz-app/:quizAppId/quizess', require('./api/quiz-app/quizess/list'))
-  loadRoute('get', '/api/quiz-app/:quizAppId/quizess/:quizId', require('./api/quiz-app/quizess/retrieve'))
-  loadRoute('post', '/api/quiz-app/:quizAppId/quizess', require('./api/quiz-app/quizess/create'))
-  loadRoute('put', '/api/quiz-app/:quizAppId/quizess/:quizId', require('./api/quiz-app/quizess/update'))
-  loadRoute('delete', '/api/quiz-app/:quizAppId/quizess/:quizId', require('./api/quiz-app/quizess/delete'))
-  loadRoute('post', '/api/quiz-app/:quizAppId/quizess/:quizId/publish', require('./api/quiz-app/quizess/publish'))
+  loadRoute('get', '/api/quiz-app/:quizAppId/quizess', require('./api/quizess/list'))
+  loadRoute('get', '/api/quiz-app/:quizAppId/quizess/:quizId', require('./api/quizess/retrieve'))
+  loadRoute('post', '/api/quiz-app/:quizAppId/quizess', require('./api/quizess/create'))
+  loadRoute('put', '/api/quiz-app/:quizAppId/quizess/:quizId', require('./api/quizess/update'))
+  loadRoute('delete', '/api/quiz-app/:quizAppId/quizess/:quizId', require('./api/quizess/delete'))
+  loadRoute('post', '/api/quiz-app/:quizAppId/quizess/:quizId/publish', require('./api/quizess/publish'))
 }
 
 module.exports = routes
