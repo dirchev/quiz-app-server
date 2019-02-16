@@ -13,7 +13,8 @@ const execute = async () => {
   app.use(bodyParser.json())
 
   let models = loadModels()
-  await loadRoutes({app, models})
+  let router = await loadRoutes({models})
+  app.use('/api', router)
 
   const port = 8080
   app.listen(port, () => console.log(`Web Service listening on port ${port}!`))
