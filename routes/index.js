@@ -2,7 +2,7 @@ const loadRouteConstructor = require('./loadRouteConstructor')
 const Router = require('express').Router
 const KNOWN_HOSTNAMES = process.env.hostname
 let getQuizAppFromHostname = function (hostname) {
-
+  console.log(hostname)
 }
 
 let loadRoutes = async function ({models = {}}) {
