@@ -36,9 +36,16 @@ let loadRoutes = async function ({models = {}}) {
   loadRoute('put', '/quiz-app/:quizAppId', require('./api/quiz-app/update'))
   loadRoute('delete', '/quiz-app/:quizAppId', require('./api/quiz-app/delete'))
 
-  loadRoute('get', '/quiz-app/:quizAppId/teachers', require('./api/teachers/list'))
-  loadRoute('post', '/quiz-app/:quizAppId/teachers', require('./api/teachers/add-teacher'))
-  loadRoute('delete', '/quiz-app/:quizAppId/teachers/:teacherId', require('./api/teachers/remove-teacher'))
+  let teachersRouter = new Router()
+  let loadTeachersRoute = loadRouteConstructor(teachersRouter, {models, apiHelpers})
+
+  loadTeachersRoute('get', '/', require('./api/teachers/list'))
+  loadTeachersRoute('post', '/', require('./api/teachers/add-teacher'))
+  loadTeachersRoute('delete', '/:teacherId', require('./api/teachers/remove-teacher'))
+
+  router.use('/teachers', teachersRouter)
+  router.use('/quiz-app/:quizAppId/teachers', teachersRouter)
+
   loadRoute('get', '/quiz-app/:quizAppId/quizess', require('./api/quizess/list'))
   loadRoute('get', '/quiz-app/:quizAppId/quizess/:quizId', require('./api/quizess/retrieve'))
   loadRoute('post', '/quiz-app/:quizAppId/quizess', require('./api/quizess/create'))
