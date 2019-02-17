@@ -17,6 +17,12 @@ let schema = new mongoose.Schema({
 })
 schema.plugin(uniqueValidator, { message: '{PATH} has already been taken' })
 
-let Application = mongoose.model('Application', schema)
+schema.method('hasTeacher', function (userId) {
+  for (let teacherId of this.teachers) {
+    if (teacherId.equals(userId)) return true
+  }
+  return false
+})
 
+let Application = mongoose.model('Application', schema)
 module.exports = Application
