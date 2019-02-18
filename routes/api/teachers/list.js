@@ -3,13 +3,7 @@ module.exports = function ({models, apiHelpers}) {
     apiHelpers.authUser,
     apiHelpers.authUserForApp,
     async (req, res) => {
-      let quizAppId = req.params.quizAppId
-
-      let quizApp = await models.Application.findOne({
-        _id: quizAppId,
-        teachers: req.user.id
-      }).populate('teachers')
-
+      let quizApp = req.quizApp
       res.body = quizApp.teachers
     }
   ]
