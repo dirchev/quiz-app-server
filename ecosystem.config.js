@@ -27,7 +27,7 @@ module.exports = {
       // pre-deploy action
       "pre-deploy-local": "echo 'This is a local executed command'",
       // post-deploy action
-      "post-deploy": "npm install",
+      "post-deploy": "npm install --production",
     },
   }
 }
