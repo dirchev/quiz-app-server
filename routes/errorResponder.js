@@ -1,7 +1,5 @@
 let errorsResponder = function (err, req, res, next) {
   let errorToSendBack = err
-  console.error(err)
-  console.log(JSON.stringify(err, null, 2))
   let statusCode = 500
   if (err.isJoi) {
     errorToSendBack = {
@@ -20,11 +18,12 @@ let errorsResponder = function (err, req, res, next) {
         path: key
       }))
     }
-    statusCode = 422
+    statusCode = err.code || 422
   } else if (err.isCustomError) {
     errorToSendBack = err
     statusCode = err.code
-  }  else {
+  } else {
+    console.error(err)
     errorToSendBack = {
       name: 'UnexpectedError'
     }

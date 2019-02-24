@@ -5,9 +5,11 @@ module.exports = () => {
   let User = require('./user')
   let Application = require('./application')
   let Quiz = require('./quiz')
+  let QuizEngagement = require('./quiz-engagement')
   return {
     User,
     Application,
-    Quiz
+    Quiz,
+    QuizEngagement
   }
 }

@@ -1,6 +1,6 @@
 const AsyncFunction = (async () => {}).constructor
 
-module.exports = function (app, context) {
+module.exports = function (router, context) {
   return (method, path, routeConstructor) => {
     let routes = routeConstructor(context)
     if (!(routes instanceof Array)) {
@@ -22,6 +22,6 @@ module.exports = function (app, context) {
         return route
       }
     })
-    app[method](path, ...routes)
+    router[method](path, ...routes)
   }
 }
