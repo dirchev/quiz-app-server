@@ -2,35 +2,43 @@ module.exports = (models) => {
   let authUser = async function (req, res) {
     let token = req.headers['authtoken']
     req.user = await models.User.findByToken(token)
-    if (!req.user) throw createError({base: 'Access denied.'}, 403, 'ValidationError')
+    if (!req.user) throw createError('base', 'Access denied.', 403, 'ValidationError')
   }
 
   let authUserForApp = async function (req, res) {
     let user = req.user
-    let quizAppId = req.params.quizAppId
-    req.quizApp = await models.Application.findOne({
-      _id: quizAppId,
-      teachers: user.id,
-    })
-    if (!req.quizApp) throw createError({quizApp: 'Application not found.'}, 404, 'ValidationError')
+    if (!req.quizApp) throw createError('base', 'Operation not allowed', 403, 'ValidationError')
+    let hasAccess = false
+    if (req.user.role === models.User.USER_ROLES.STUDENT) {
+      hasAccess = req.quizApp.hasStudent(user.id)
+    } else if (req.user.role === models.User.USER_ROLES.TEACHER) {
+      hasAccess = req.quizApp.hasTeacher(user.id)
+    }
+    if (!hasAccess) throw createError('base', 'Operation not allowed', 403, 'ValidationError')
+  }
+
+  let authStudent = async function (req, res) {
+    let user = req.user
+    if (req.user.role !== models.User.USER_ROLES.STUDENT) throw createError('base', 'Operation not allowed', 403, 'ValidationError')
   }
 
   let authOwnerForApp = async function (req, res) {
     let user = req.user
-    let quizAppId = req.params.quizAppId
-    req.quizApp = await models.Application.findOne({
-      _id: quizAppId,
-      owner: user.id,
-    })
-    if (!req.quizApp) throw createError({quizApp: 'Application not found.'}, 404, 'ValidationError')
+    let quizApp = req.quizApp
+    if (!quizApp.owner.equals(user.id)) throw createError('base', 'Operation not allowed', 403, 'ValidationError')
   }
 
-  let createError = function (errors, code, name = 'CustomError') {
+  let createError = function (field, message, code, name = 'CustomError') {
     let error = new Error(name)
     error.name = name
     error.isCustomError = true
     error.code = code
-    error.errors = errors
+    error.errors = {}
+    error.errors[field] = {
+      message: message,
+      name: 'ValidationError',
+      path: field,
+    }
     return error
   }
 
@@ -52,6 +60,7 @@ module.exports = (models) => {
 
   return {
     authUser,
+    authStudent,
     authUserForApp,
     authOwnerForApp,
     createFieldError,
