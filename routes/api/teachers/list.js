@@ -4,7 +4,8 @@ module.exports = function ({models, apiHelpers}) {
     apiHelpers.authUserForApp,
     async (req, res) => {
       let quizApp = req.quizApp
-      res.body = quizApp.teachers
+      let teachers = await models.User.find({_id: {$in: quizApp.teachers}})
+      res.body = teachers
     }
   ]
 }
