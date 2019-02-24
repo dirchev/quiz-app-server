@@ -6,7 +6,7 @@ module.exports = {
   }],
   deploy: {
     // VMWARE local machine
-    local: {
+    staging: {
       // SSH key path, default to $HOME/.ssh
       key: "$HOME/.ssh",
       // SSH user
