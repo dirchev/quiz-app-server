@@ -1,10 +1,9 @@
-const User = require('../../models/user')
-const Application = require('../../models/application')
 const mongoose = require('mongoose')
+const User = mongoose.model('User')
 const assert = require('assert')
 const faker = require('faker')
 
-describe('application model', () => {
+describe('user model', () => {
   before(async function () {
     await mongoose.connect('mongodb://127.0.0.1:27017/quiz-app-test', {useNewUrlParser: true})
   })

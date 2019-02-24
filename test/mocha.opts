@@ -1,0 +1,3 @@
+--file ./models/all.js
+--exit
+--bail

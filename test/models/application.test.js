@@ -1,6 +1,6 @@
-const User = require('../../models/user')
-const Application = require('../../models/application')
 const mongoose = require('mongoose')
+const User = mongoose.model('User')
+const Application = mongoose.model('Application')
 const assert = require('assert')
 const faker = require('faker')
 
