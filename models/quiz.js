@@ -8,12 +8,29 @@ let schema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String },
   quizApp: {type: ObjectId, ref: 'Application', required: true},
-  questions: Mixed,
+  questions: [
+    {
+      _id: { type: String },
+      title: { type: String },
+      content: { type: String },
+      type: {
+        type: String,
+        enum: [
+          'MCQ_MULTIPLE_RIGHT',
+          'MCQ_ONE_RIGHT',
+          'FREE_SHORT_TEXT',
+          'FREE_LONG_TEXT'
+        ]
+      },
+      answers: {type: Mixed}
+    }
+  ],
 
   // settings
   isMandatory: { type: Boolean, default: false },
   noOfAttempts: { type: Number, default: 0 },
   deadline: { type: Date },
+  timeLimit: { type: Number }, // in minutes
 
   // when published
   answersReleased: Boolean,
@@ -30,6 +47,32 @@ schema.pre('validate', async function () {
   if (this.isModified('published') && this.published) {
     if (!this.questions.length) this.invalidate('questions', 'can not publish quiz without questions', this.questions)
   }
+})
+
+schema.method('getQuestionsDetails', function () {
+  return this.questions.map(function (question) {
+    if (['MCQ_MULTIPLE_RIGHT', 'MCQ_ONE_RIGHT'].indexOf(question.type) !== -1) {
+      return {
+        _id: question._id,
+        title: question.title,
+        content: question.content,
+        type: question.type,
+        answers: question.answers.options.map((answer) => {
+          return {
+            _id: answer._id,
+            text: answer.text
+          }
+        })
+      }
+    } else if (['FREE_SHORT_TEXT', 'FREE_LONG_TEXT'].indexOf(question.type) !== -1) {
+      return {
+        _id: question._id,
+        title: question.title,
+        content: question.content,
+        type: question.type,
+      }
+    }
+  })
 })
 
 let Quiz = mongoose.model('Quiz', schema)

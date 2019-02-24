@@ -5,8 +5,8 @@ var uniqueValidator = require('mongoose-unique-validator')
 
 let schema = new mongoose.Schema({
   name: { type: String, required: true },
-  subdomain: { type: String, required: true, unique: true },
-  joinCode: { type: String },
+  subdomain: { type: String, required: true, unique: true, lowercase: true },
+  joinCode: { type: String, select: false },
   owner: { type: ObjectId, ref: 'User' },
   teachers: [
     { type: ObjectId, ref: 'User' }
@@ -22,6 +22,18 @@ schema.method('hasTeacher', function (userId) {
     if (teacherId.equals(userId)) return true
   }
   return false
+})
+
+schema.method('hasStudent', function (userId) {
+  for (let studentId of this.students) {
+    if (studentId.equals(userId)) return true
+  }
+  return false
+})
+
+schema.method('addStudent', async function (userId) {
+  this.students.addToSet(userId)
+  return this.save()
 })
 
 let Application = mongoose.model('Application', schema)
