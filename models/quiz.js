@@ -13,6 +13,7 @@ let schema = new mongoose.Schema({
       _id: { type: String },
       title: { type: String },
       content: { type: String },
+      points: { type: Number }, // max number of points for right answer
       type: {
         type: String,
         enum: [
