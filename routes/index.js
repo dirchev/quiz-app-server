@@ -1,13 +1,19 @@
 const loadRouteConstructor = require('./loadRouteConstructor')
 const Router = require('express').Router
 
+let getSubdomain = (hostname) => {
+  let currentHostname = process.env.HOSTNAME
+  if (hostname.indexOf(currentHostname) === -1) return false
+  let subdomain = hostname.slice(0, hostname.indexOf(currentHostname))
+  return subdomain && subdomain.slice(0, -1)
+}
+
 let loadRoutes = async function ({models = {}}) {
   let apiHelpers = require('./api-helpers')(models)
   let router = new Router()
 
   router.use((req, res, next) => {
-    if (req.hostname.indexOf(process.env.HOSTNAME) === -1) return next()
-    let quizAppSubdomain = req.hostname.split('.').shift()
+    let quizAppSubdomain = getSubdomain(req.hostname)
     if (!quizAppSubdomain) return next()
     models.Application.findOne({subdomain: quizAppSubdomain}).select('-joinCode').then(function (quizApp) {
       req.quizApp = quizApp
