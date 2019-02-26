@@ -75,7 +75,7 @@ describe('DELETE /api/teachers/:id', () => {
       errors: [
         {
           message: "Owner can not be removed",
-          path: "teacher"
+          path: "base"
         }
       ],
       name: "ValidationError"
