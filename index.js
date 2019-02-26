@@ -1,4 +1,3 @@
-require('dotenv').config()
 const initServer = require('./server')
 
 const execute = async () => {
