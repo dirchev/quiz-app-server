@@ -27,7 +27,7 @@ module.exports = {
       // pre-deploy action
       "pre-deploy-local": "echo 'This is a local executed command'",
       // post-deploy action
-      "post-deploy": "npm install && pm2 startOrRestart ecosystem.config.js --env staging",
+      "post-deploy": "npm install && env-cmd .env pm2 startOrRestart ecosystem.config.js --env staging",
     },
     production: {
       // SSH key path, default to $HOME/.ssh
