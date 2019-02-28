@@ -50,7 +50,7 @@ module.exports = {
       // pre-deploy action
       "pre-deploy-local": "echo 'This is a local executed command'",
       // post-deploy action
-      "post-deploy": "npm install --no-save && pm2 startOrRestart ecosystem.config.js --env staging",
+      "post-deploy": "npm install && env-cmd .env pm2 startOrRestart ecosystem.config.js --env production",
     },
   }
 }
