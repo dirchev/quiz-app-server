@@ -49,8 +49,13 @@ let loadRoutes = async function ({models = {}}) {
   loadTeachersRoute('get', '/', require('./api/teachers/list'))
   loadTeachersRoute('post', '/', require('./api/teachers/add-teacher'))
   loadTeachersRoute('delete', '/:teacherId', require('./api/teachers/remove-teacher'))
-  router.use('/teachers', teachersRouter)
   router.use('/quiz-app/:quizAppId/teachers', teachersRouter)
+
+  let studentsRouter = new Router()
+  let loadStudentsRoute = loadRouteConstructor(studentsRouter, {models, apiHelpers})
+  loadStudentsRoute('get', '/', require('./api/students/list'))
+  loadStudentsRoute('delete', '/:studentId', require('./api/students/remove'))
+  router.use('/quiz-app/:quizAppId/students', studentsRouter)
 
   let quizessRouter = new Router()
   let loadQuizessRoute = loadRouteConstructor(quizessRouter, {models, apiHelpers})

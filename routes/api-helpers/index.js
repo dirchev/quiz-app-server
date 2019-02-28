@@ -18,8 +18,11 @@ module.exports = (models) => {
   }
 
   let authStudent = async function (req, res) {
-    let user = req.user
     if (req.user.role !== models.User.USER_ROLES.STUDENT) throw createError('base', 'Operation not allowed', 403, 'ValidationError')
+  }
+
+  let authTeacher = async function (req, res) {
+    if (req.user.role !== models.User.USER_ROLES.TEACHER) throw createError('base', 'Operation not allowed', 403, 'ValidationError')
   }
 
   let authOwnerForApp = async function (req, res) {
@@ -61,6 +64,7 @@ module.exports = (models) => {
   return {
     authUser,
     authStudent,
+    authTeacher,
     authUserForApp,
     authOwnerForApp,
     createFieldError,
