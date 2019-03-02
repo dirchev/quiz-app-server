@@ -14,9 +14,24 @@ let schema = new mongoose.Schema({
   finished: {type: Boolean},
   finishedAt: {type: Date},
 
+  marked: {type: Boolean},
+  markedAt: {type: Date},
+
   answersGiven: {
     type: Map,
     of: Mixed
+  },
+
+  answersMarks: {
+    type: Map,
+    of: Number,
+    select: false
+  },
+
+  answersFeedbacks: {
+    type: Map,
+    of: Number,
+    select: false
   }
 })
 
