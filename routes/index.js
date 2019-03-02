@@ -58,6 +58,15 @@ let loadRoutes = async function ({models = {}}) {
   router.use('/quiz-app/:quizAppId/students', studentsRouter)
 
   let quizessRouter = new Router()
+
+  quizessRouter.param('quizId', (req, res, next, id) => {
+    models.Quiz.findById(id, function (err, quiz) {
+      if (err) return next(err)
+      req.quiz = quiz
+      next()
+    })
+  })
+
   let loadQuizessRoute = loadRouteConstructor(quizessRouter, {models, apiHelpers})
   loadQuizessRoute('get', '/', require('./api/quizess/list'))
   loadQuizessRoute('get', '/:quizId', require('./api/quizess/retrieve'))
@@ -66,17 +75,17 @@ let loadRoutes = async function ({models = {}}) {
   loadQuizessRoute('delete', '/:quizId', require('./api/quizess/delete'))
   loadQuizessRoute('post', '/:quizId/publish', require('./api/quizess/publish'))
   loadQuizessRoute('get', '/:quizId/prepare', require('./api/quizess/prepare'))
+  router.use('/quizess', quizessRouter)
+  router.use('/quiz-app/:quizAppId/quizess', quizessRouter)
 
   let quizEngagementsRouter = new Router()
   let loadQuizEngagementsRoute = loadRouteConstructor(quizEngagementsRouter, {models, apiHelpers})
   loadQuizEngagementsRoute('post', '/', require('./api/quiz-engagements/create'))
-  loadQuizEngagementsRoute('get', '/:quizId/', require('./api/quiz-engagements/list'))
+  loadQuizEngagementsRoute('get', '/', require('./api/quiz-engagements/list'))
   loadQuizEngagementsRoute('post', '/:quizEngagementId/finish', require('./api/quiz-engagements/finish'))
-  loadQuizEngagementsRoute('put', '/:quizEngagementId', require('./api/quiz-engagements/update-answers'))
-
-  router.use('/quizess', quizessRouter)
-  router.use('/quiz-app/:quizAppId/quizess', quizessRouter)
-  router.use('/quiz-engagements', quizEngagementsRouter)
+  loadQuizEngagementsRoute('put', '/:quizEngagementId', require('./api/quiz-engagements/update'))
+  loadQuizEngagementsRoute('post', '/:quizEngagementId/finish-marking', require('./api/quiz-engagements/finish-marking'))
+  quizessRouter.use('/:quizId/quiz-engagements', quizEngagementsRouter)
 
   return router
 }
