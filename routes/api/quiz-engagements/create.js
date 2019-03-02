@@ -5,10 +5,7 @@ module.exports = function ({models, apiHelpers}) {
     apiHelpers.authStudent,
     async (req, res) => {
       let quizApp = req.quizApp
-      let quizId = req.body.quizId
-      let quiz = await models.Quiz.findById(quizId)
-
-      if (!quiz) throw apiHelpers.createError('base', 'Quiz not found', 404)
+      let quiz = req.quiz
 
       let quizEngagementData = {
         quizApp: quizApp._id,

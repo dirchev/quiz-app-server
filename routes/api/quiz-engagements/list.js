@@ -2,18 +2,25 @@ module.exports = function ({models, apiHelpers}) {
   return [
     apiHelpers.authUser,
     apiHelpers.authUserForApp,
-    apiHelpers.authStudent,
     async (req, res) => {
-      let quizId = req.params.quizId
-      let quiz = await models.Quiz.findById(quizId)
+      let quiz = req.quiz
 
       if (!quiz) throw apiHelpers.createError('base', 'Quiz not found', 404)
-
-      let quizEngagements = await models.QuizEngagement.find({
+      let populate = ''
+      let query = {
         quiz: quiz._id,
-        student: req.user._id,
         finished: true
-      }).sort({started: -1})
+      }
+      let select = ''
+      if (req.user.role === models.User.USER_ROLES.STUDENT) {
+        query.student = req.user._id
+      }
+      if (req.user.role === models.User.USER_ROLES.TEACHER) {
+        populate = 'student'
+        select = '+answersMarks +answersFeedbacks'
+      }
+
+      let quizEngagements = await models.QuizEngagement.find(query, select).populate(populate).sort({finishedAt: -1})
 
       res.body = quizEngagements
     }
