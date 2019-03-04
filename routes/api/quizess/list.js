@@ -18,7 +18,8 @@ module.exports = function ({models, apiHelpers}) {
           isMandatory: 1,
           noOfAttempts: 1,
           deadline: 1,
-          timeLimit: 1
+          timeLimit: 1,
+          marksReleased: 1
         }
       }
       let quizess = await models.Quiz.find(query).select(select)
