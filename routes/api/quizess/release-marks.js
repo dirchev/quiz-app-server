@@ -1,7 +1,8 @@
 module.exports = function ({models, apiHelpers}) {
   return [
     apiHelpers.authUser,
-    apiHelpers.authUserForApp,
+    apiHelpers.authTeacher,
+    apiHelpers.authOwnerForApp,
     async (req, res) => {
       let quizApp = req.quizApp
 
@@ -10,11 +11,10 @@ module.exports = function ({models, apiHelpers}) {
         quizApp: quizApp.id
       })
 
-      if (!quiz) throw apiHelpers.createError('base', 'Quiz not found', 403)
+      if (!quiz) throw apiHelpers.createFieldError('quiz', 'Quiz not found')
 
-      if (req.user.role === models.User.USER_ROLES._STUDENT && !quiz.marksReleased) {
-        throw apiHelpers.createError('base', 'Quiz marks not released', 403)
-      }
+      quiz.marksReleased = true
+      await quiz.save()
 
       res.body = quiz
     }

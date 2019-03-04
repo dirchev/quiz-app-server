@@ -34,8 +34,7 @@ let schema = new mongoose.Schema({
   timeLimit: { type: Number }, // in minutes
 
   // when published
-  answersReleased: Boolean,
-  marksReleased: Boolean,
+  marksReleased: {type: Boolean},
 
   // publish info
   published: {type: Boolean, default: false},
