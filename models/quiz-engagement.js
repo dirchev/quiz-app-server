@@ -30,7 +30,7 @@ let schema = new mongoose.Schema({
 
   answersFeedbacks: {
     type: Map,
-    of: Number,
+    of: String,
     select: false
   }
 })
