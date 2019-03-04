@@ -20,7 +20,7 @@ module.exports = function ({models, apiHelpers}) {
         quizEngagement.set('answersGiven', req.body.answersGiven)
       } else if (req.user.role === models.User.USER_ROLES.TEACHER) {
         quizEngagement.set('answersMarks', req.body.answersMarks)
-        quizEngagement.set('answersFeedback', req.body.answersFeedback)
+        quizEngagement.set('answersFeedbacks', req.body.answersFeedbacks)
       }
 
       await quizEngagement.save()
