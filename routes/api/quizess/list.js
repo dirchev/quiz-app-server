@@ -1,3 +1,4 @@
+const _ = require('lodash')
 module.exports = function ({models, apiHelpers}) {
   return [
     apiHelpers.authUser,
@@ -8,23 +9,34 @@ module.exports = function ({models, apiHelpers}) {
       let query = {
         quizApp: quizApp.id
       }
-      let select = {}
       if (req.user.role === models.User.USER_ROLES.STUDENT) {
         query.published = true
-        select = {
-          name: 1,
-          description: 1,
-          quizApp: 1,
-          isMandatory: 1,
-          noOfAttempts: 1,
-          deadline: 1,
-          timeLimit: 1,
-          marksReleased: 1
-        }
       }
-      let quizess = await models.Quiz.find(query).select(select)
+      let quizess = await models.Quiz.find(query).lean(true)
+      let response = quizess.map((quiz) => {
+        if (req.user.role === models.User.USER_ROLES.STUDENT) {
+          let fieldsToPick = [
+            '_id',
+            'name',
+            'description',
+            'quizApp',
+            'isMandatory',
+            'noOfAttempts',
+            'deadline',
+            'timeLimit',
+            'marksReleased',
+            'published',
+            'publishedBy',
+            'publishedOn',
+          ]
+          if (quiz.marksReleased) fieldsToPick.push('questions')
+          return _.pick(quiz, fieldsToPick)
+        } else {
+          return quiz
+        }
+      })
 
-      res.body = quizess
+      res.body = response
     }
   ]
 }

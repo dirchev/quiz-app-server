@@ -14,8 +14,8 @@ module.exports = function ({models, apiHelpers}) {
       let select = ''
       if (req.user.role === models.User.USER_ROLES.STUDENT) {
         query.student = req.user._id
-      }
-      if (req.user.role === models.User.USER_ROLES.TEACHER) {
+        if (quiz.marksReleased) select = '+answersMarks +answersFeedbacks'
+      } else if (req.user.role === models.User.USER_ROLES.TEACHER) {
         populate = 'student'
         select = '+answersMarks +answersFeedbacks'
       }
