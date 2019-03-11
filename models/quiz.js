@@ -57,12 +57,14 @@ schema.method('getQuestionsDetails', function () {
         title: question.title,
         content: question.content,
         type: question.type,
-        answers: question.answers.options.map((answer) => {
-          return {
-            _id: answer._id,
-            text: answer.text
-          }
-        })
+        answers: {
+          options: question.answers.options.map((answer) => {
+            return {
+              _id: answer._id,
+              text: answer.text
+            }
+          })
+        }
       }
     } else if (['FREE_SHORT_TEXT', 'FREE_LONG_TEXT'].indexOf(question.type) !== -1) {
       return {

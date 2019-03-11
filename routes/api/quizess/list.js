@@ -29,7 +29,6 @@ module.exports = function ({models, apiHelpers}) {
             'publishedBy',
             'publishedOn',
           ]
-          if (quiz.marksReleased) fieldsToPick.push('questions')
           return _.pick(quiz, fieldsToPick)
         } else {
           return quiz
