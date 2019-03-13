@@ -35,7 +35,7 @@ let loadRoutes = async function ({models = {}}) {
   loadRoute('post', '/login', require('./api/login'))
   loadRoute('post', '/register', require('./api/register'))
   loadRoute('post', '/logout', require('./api/logout'))
-  loadRoute('post', '/get-manifest', require('./api/get-manifest'))
+  loadRoute('get', '/get-manifest', require('./api/get-manifest.js'))
 
   // QUIZ APP
   loadRoute('get', '/load', require('./api/quiz-app/load'))
