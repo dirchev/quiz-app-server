@@ -1,11 +1,16 @@
-const Joi = require('joi')
+const generateShortName = function (name) {
+  return name.split(' ').map(function (item) {
+    if (/^\d+$/.test(item)) return item
+    return item[0]
+  }).join('')
+}
 
 module.exports = function ({models, apiHelpers}) {
   return [
     async (req, res) => {
       let quizApp = req.quizApp
       res.body = {
-        "short_name": quizApp.name,
+        "short_name": generateShortName(quizApp.name),
         "name": quizApp.name,
         "display": "fullscreen",
         "icons": [
