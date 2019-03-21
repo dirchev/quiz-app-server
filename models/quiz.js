@@ -28,6 +28,7 @@ let schema = new mongoose.Schema({
   ],
 
   // settings
+  isAvailableOffline: { type: Boolean, default: false },
   isMandatory: { type: Boolean, default: false },
   noOfAttempts: { type: Number, default: 0 },
   deadline: { type: Date },

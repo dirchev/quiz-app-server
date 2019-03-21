@@ -83,6 +83,7 @@ let loadRoutes = async function ({models = {}}) {
   let quizEngagementsRouter = new Router()
   let loadQuizEngagementsRoute = loadRouteConstructor(quizEngagementsRouter, {models, apiHelpers})
   loadQuizEngagementsRoute('post', '/', require('./api/quiz-engagements/create'))
+  loadQuizEngagementsRoute('post', '/sync', require('./api/quiz-engagements/sync'))
   loadQuizEngagementsRoute('post', '/:quizEngagementId/resume', require('./api/quiz-engagements/resume'))
   loadQuizEngagementsRoute('get', '/', require('./api/quiz-engagements/list'))
   loadQuizEngagementsRoute('post', '/:quizEngagementId/finish', require('./api/quiz-engagements/finish'))

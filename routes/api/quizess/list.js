@@ -27,6 +27,7 @@ module.exports = function ({models, apiHelpers}) {
             'marksReleased',
             'published',
             'publishedBy',
+            'isAvailableOffline',
             'publishedOn',
           ]
           return _.pick(quiz, fieldsToPick)
