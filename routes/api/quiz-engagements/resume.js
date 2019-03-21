@@ -4,9 +4,6 @@ module.exports = function ({models, apiHelpers}) {
     apiHelpers.authUserForApp,
     apiHelpers.authStudent,
     async (req, res) => {
-      let quizApp = req.quizApp
-      let quiz = req.quiz
-
       let quizEngagementId = req.params.quizEngagementId
       let quizEngagement = await models.QuizEngagement.findOne({
         _id: quizEngagementId,

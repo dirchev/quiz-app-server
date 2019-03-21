@@ -9,7 +9,6 @@ module.exports = function ({models, apiHelpers}) {
       let populate = ''
       let query = {
         quiz: quiz._id,
-        // finished: true
       }
       let select = ''
       if (req.user.role === models.User.USER_ROLES.STUDENT) {
