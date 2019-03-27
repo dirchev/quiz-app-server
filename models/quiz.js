@@ -14,6 +14,7 @@ let schema = new mongoose.Schema({
       title: { type: String },
       content: { type: String },
       points: { type: Number }, // max number of points for right answer
+      defaultFeedback: { type: String },
       type: {
         type: String,
         enum: [
@@ -29,6 +30,7 @@ let schema = new mongoose.Schema({
 
   // settings
   isAvailableOffline: { type: Boolean, default: false },
+  canMarkAutomatically: { type: Boolean, default: false },
   isMandatory: { type: Boolean, default: false },
   noOfAttempts: { type: Number, default: 0 },
   deadline: { type: Date },

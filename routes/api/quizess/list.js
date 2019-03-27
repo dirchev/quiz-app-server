@@ -21,6 +21,7 @@ module.exports = function ({models, apiHelpers}) {
             'description',
             'quizApp',
             'isMandatory',
+            'canMarkAutomatically',
             'noOfAttempts',
             'deadline',
             'timeLimit',
