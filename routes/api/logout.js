@@ -1,7 +1,7 @@
 module.exports = function ({models, apiHelpers}) {
   return [
     async (req, res) => {
-      let token = req.headers['codescannertoken']
+      let token = req.headers['authtoken']
       if (!token) {
         res.body = {success: true}
         return
