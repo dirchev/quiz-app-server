@@ -7,9 +7,15 @@ module.exports = function ({models, apiHelpers}) {
     apiHelpers.authStudent,
     apiHelpers.authUserForApp,
     async (req, res) => {
+      let quiz = req.quiz
       let quizEngagementData = req.body
-      let quizEngagement = await models.QuizEngagement.create(quizEngagementData)
+      let quizEngagement = new models.QuizEngagement(quizEngagementData)
+
+      await quizEngagement.save()
       res.body = quizEngagement
+      if (quizEngagement.finished) {
+        models.QuizEngagement.calculateMarksForQuizEngagement(quizEngagement.id) // async, do not wait
+      }
     }
   ]
 }
