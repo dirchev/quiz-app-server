@@ -12,7 +12,7 @@ module.exports = function ({models, apiHelpers}) {
       res.body = {
         "short_name": generateShortName(quizApp.name),
         "name": quizApp.name,
-        "display": "minimal-ui",
+        "display": "standalone",
         "icons": [
           {
             "src": "logo/64.png",
