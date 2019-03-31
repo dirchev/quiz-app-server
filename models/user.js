@@ -31,7 +31,7 @@ schema.plugin(uniqueValidator, { message: '{PATH} has already been taken' })
 schema.pre('save', async function () {
   var self = this
   if (!this.isModified('password')) return
-  let hash = await bcrypt.hash(this.password, 3)
+  let hash = await bcrypt.hash(this.password, 1)
   this.password = hash
   return
 })

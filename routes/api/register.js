@@ -33,8 +33,6 @@ module.exports = function ({models, apiHelpers}) {
       joinCode: req.body.joinCode
     }, studentSchema)
     req.quizApp = await models.Application.findById(req.quizApp.id).select('+joinCode') // get the join code
-    console.log(req.quizApp.joinCode)
-    console.log(data.joinCode)
     if (req.quizApp.joinCode !== data.joinCode) {
       throw apiHelpers.createFieldError('joinCode', 'Join code is not valid', 422)
     }

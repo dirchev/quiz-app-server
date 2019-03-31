@@ -17,5 +17,6 @@ module.exports = async function () {
   app.use('/api', router)
 
   const port = process.env.PORT || 8080
+  console.log('app listening on port', port)
   return app.listen(port)
 }
