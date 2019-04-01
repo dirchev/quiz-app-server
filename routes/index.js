@@ -58,6 +58,14 @@ let loadRoutes = async function ({models = {}}) {
   loadStudentsRoute('delete', '/:studentId', require('./api/students/remove'))
   router.use('/quiz-app/:quizAppId/students', studentsRouter)
 
+  let userTestRouter = new Router()
+  let loadUserTestRoute = loadRouteConstructor(userTestRouter, {models, apiHelpers})
+  loadUserTestRoute('post', '/', require('./api/user-tests/create'))
+  loadUserTestRoute('post', '/:userTestId/set-flag', require('./api/user-tests/set-flag'))
+  loadUserTestRoute('post', '/:userTestId/set-step', require('./api/user-tests/set-step'))
+  loadUserTestRoute('post', '/:userTestId/finish', require('./api/user-tests/finish'))
+  router.use('/user-tests', userTestRouter)
+
   let quizessRouter = new Router()
 
   quizessRouter.param('quizId', (req, res, next, id) => {
