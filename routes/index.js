@@ -44,6 +44,7 @@ let loadRoutes = async function ({models = {}}) {
   loadRoute('post', '/quiz-app', require('./api/quiz-app/create'))
   loadRoute('put', '/quiz-app/:quizAppId', require('./api/quiz-app/update'))
   loadRoute('delete', '/quiz-app/:quizAppId', require('./api/quiz-app/delete'))
+  loadRoute('get', '/quiz-app/:quizAppId/user-tests', require('./api/quiz-app/user-tests'))
 
   let teachersRouter = new Router()
   let loadTeachersRoute = loadRouteConstructor(teachersRouter, {models, apiHelpers})
