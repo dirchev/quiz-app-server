@@ -86,6 +86,7 @@ let loadRoutes = async function ({models = {}}) {
   loadQuizessRoute('post', '/:quizId/publish', require('./api/quizess/publish'))
   loadQuizessRoute('post', '/:quizId/release-marks', require('./api/quizess/release-marks'))
   loadQuizessRoute('get', '/:quizId/prepare', require('./api/quizess/prepare'))
+  loadQuizessRoute('get', '/:quizId/stats', require('./api/quizess/stats'))
   router.use('/quizess', quizessRouter)
   router.use('/quiz-app/:quizAppId/quizess', quizessRouter)
 
