@@ -40,7 +40,7 @@ module.exports = function ({models, apiHelpers}) {
             "type": "image/png"
           }
         ],
-        "start_url": ".",
+        "start_url": "/",
         "theme_color": "#1E88E5",
         "background_color": "#ffffff"
       }
