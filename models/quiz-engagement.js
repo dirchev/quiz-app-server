@@ -85,7 +85,7 @@ schema.static('calculateMarksForQuizEngagement', async function (quizEngagementI
   await quizEngagement.calculateMarks()
   if (quiz.canMarkAutomatically) {
     quizEngagement.marked = true
-    quizEngagement.markedAt = new Date
+    quizEngagement.markedAt = new Date()
   }
   return quizEngagement.save()
 })
